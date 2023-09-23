@@ -1,0 +1,41 @@
+{
+  "name": "TrafficAssistant",
+  "version": "1.2.0",
+  "description": "TrafficAssistant - \n监控网络活动\nMonitor network activity",
+  "main": "dist/main.js",
+  "license": "BSD-3-Clause",
+  "author": {
+    "name": "jingyu",
+    "email": "873769935@qq.com",
+    "url": "https://github.com/whaleluo"
+  },
+  "devDependencies": {
+    "@types/node": "^18.16.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.6",
+    "@typescript-eslint/parser": "^5.59.6",
+    "electron": "^24.1.2",
+    "electron-builder": "^23.6.0",
+    "eslint": "8.22.0",
+    "rimraf": "^5.0.1",
+    "typescript": "^5.0.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "start": "yarn build && electron .",
+    "prestart": "yarn build",
+    "package": "yarn build && electron-builder build",
+    "package-win32": "yarn build && electron-builder -w",
+    "postinstall": "electron-builder install-app-deps",
+    "clean": "rimraf dist release",
+    "clean-realese": "rimraf -g release/*-unpacked  && rimraf -g release/builder-*  && rimraf dist",
+    "lint": "eslint src/**/*.ts --quiet --fix"
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "electron-updater": "^5.3.0",
+    "get-adapter-info": "^1.0.0"
+  }
+}

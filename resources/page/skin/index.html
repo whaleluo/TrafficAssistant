@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>更换皮肤</title>
+</head>
+<style>
+    html,body,div{
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .item{
+        height: 50px;
+    }
+    .window {
+        font: 9pt Segoe UI, sans-serif;
+        padding: 15px;
+        position: relative;
+        z-index: 0;
+        border: 0;
+        background: linear-gradient(90deg, hsla(0, 0%, 100%, .4), rgba(0, 0, 0, .1), hsla(0, 0%, 100%, .2)), linear-gradient(55deg, transparent, rgba(0, 0, 0, .1) 20%, rgba(0, 0, 0, .1) 50%, transparent 53%), #805ba5;;
+    }
+    .container{
+        box-sizing: border-box;
+        border-radius: 6px;
+        background: #f0f0f0;
+        border: 1px solid rgba(0,0,0,.7);
+        box-shadow: 0 0 1px 0.5px #fff;
+        height: 85%;
+
+    }
+    .foot{
+        position: fixed;
+        display: flex;
+        justify-content: flex-end;
+        margin-right: 9px;
+        bottom: 15px;
+        right: 5px;
+        height: min-content;
+    }
+    .win-btn {
+        width: 77px;
+        height: 25px;
+        border: 1px solid #F3F3F3;
+        outline: none;
+        box-shadow: 0 0 0 1px #707070;
+        background: -webkit-linear-gradient(top, #F2F2F2 0%, #EBEBEB 50%, #DDDDDD 51%, #CFCFCF 100%);
+        font: normal 12px sans-serif;
+        -webkit-user-select: none;
+    }
+
+    .win-btn:hover {
+        border: 1px solid #ECF7FD;
+        box-shadow: 0 0 0 1px #3C7FB1;
+        background: -webkit-linear-gradient(top, #EAF6FD 0%, #D9F0FC 50%, #BEE6FD 51%, #A7D9F5 100%);
+    }
+
+    .win-btn:active {
+        padding: 2px 7px 3px 9px;
+        border: 1px solid #73A7C4;
+        border-bottom: 0;
+        box-shadow: 0 0 0 1px #2C628B;
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #E5F4FC), color-stop(0.5, #C4E5F6), color-stop(0.51, #98D1EF), color-stop(1, #68B3DB));
+    }
+    li{
+        margin-bottom: 7px
+    }
+    .reset{
+        width: 120px;
+        margin-left: 25px;
+        margin-bottom: 7px;
+    }
+    a {
+        color: #06c;
+        text-decoration: none;
+    }
+</style>
+<body class="window">
+<div class="container">
+
+    <h4>✨ 皮肤制作教程 ✨</h4>
+    <ul>
+        <li>悬浮窗图片：打开<a class="skin-a" href="javascript:void(0);" onclick="openSkinDir()">皮肤目录</a>，找到当前悬浮窗图片body-skin.png，替换掉同名图片即可。</li>
+
+        <li>托盘图片：打开<a class="skin-a" href="javascript:void(0);" onclick="openSkinDir()">皮肤目录</a>，找到托盘图片tray-skin.png,替换掉同名图片即可。</li>
+    </ul>
+    <button onclick="openSkinDir()" class="win-btn reset">打开皮肤目录</button><br/>
+    <button class="reset win-btn" onclick="resetSkinDir()">恢复默认皮肤</button>
+</div>
+<div class="foot">
+    <button class="win-btn" onclick="closeWindow()">关闭</button>
+</div>
+</body>
+<script>
+    const {ipcRenderer} = require('electron')
+    function closeWindow() {
+        ipcRenderer.invoke('close')
+    }
+    function openSkinDir() {
+        ipcRenderer.invoke('open-skin-dir')
+    }
+    function resetSkinDir() {
+        ipcRenderer.invoke('reset-skin-dir')
+    }
+
+</script>
+</html>

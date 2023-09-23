@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <style>
+        @font-face {
+            font-family: "Pixelated MS Sans Serif";
+            font-style: normal;
+            font-weight: 400;
+            src: url(../../font/ms_sans_serif.woff) format("woff");
+            src: url(../../font/ms_sans_serif.woff2) format("woff2")
+        }
+        html,body{
+            background-color: #f0f0f0;
+            height: 100%;
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: none;
+            font-family: "Pixelated MS Sans Serif",Arial;
+        }
+        body{
+            /*margin塌陷问题*/
+            padding-top: 1px;
+        }
+        div{
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        .container{
+            border: solid 1px gray;
+            font-size: small;
+            height: 77%;
+            margin: 9px;
+            padding: 7px;
+            background-color: #ffffff;
+            overflow-y: auto;
+            overflow-x:hidden;
+        }
+        .adapt-box{
+            display: flex;
+        }
+        .adapt-name{
+            min-width: 107px;
+            width: 107px;
+        }
+        .adapt-val{
+            padding-left: 7px;
+        }
+        .adapt-name,.adapt-val{
+            white-space: pre;
+            overflow: hidden;
+            text-overflow:ellipsis;
+        }
+
+        .head-name{
+            border-right: solid 1px darkgrey;
+        }
+        .foot{
+            position: fixed;
+            display: flex;
+            justify-content: flex-end;
+            margin-right: 9px;
+            bottom: 15px;
+            right: 2px;
+        }
+
+        .win-btn {
+            width: 77px;
+            height: 25px;
+            border: 1px solid #F3F3F3;
+            outline: none;
+            box-shadow: 0 0 0 1px #707070;
+            background: -webkit-linear-gradient(top, #F2F2F2 0%, #EBEBEB 50%, #DDDDDD 51%, #CFCFCF 100%);
+            font: normal 12px sans-serif;
+            -webkit-user-select: none;
+        }
+        .win-btn:hover {
+            border: 1px solid #ECF7FD;
+            box-shadow: 0 0 0 1px #3C7FB1;
+            background: -webkit-linear-gradient(top, #EAF6FD 0%, #D9F0FC 50%, #BEE6FD 51%, #A7D9F5 100%);
+        }
+        .win-btn:active {
+            padding: 2px 7px 3px 9px;
+            border: 1px solid #73A7C4;
+            border-bottom: 0;
+            box-shadow: 0 0 0 1px #2C628B;
+            background: -webkit-gradient(linear, left top, left bottom, color-stop(0,#E5F4FC), color-stop(0.5,#C4E5F6),color-stop(0.51,#98D1EF),color-stop(1,#68B3DB));
+        }
+    </style>
+    <title>连接详情</title>
+
+</head>
+<body>
+  <div class="container">
+        <div class="adapt-box">
+            <div class="adapt-name head-name" >项目</div>
+            <div class="adapt-val">值</div>
+        </div>
+  </div>
+  <div class="foot">
+      <button class="win-btn" onclick="closeWindow()">关闭</button>
+  </div>
+</body>
+<script>
+    const {ipcRenderer} = require('electron')
+    const imgDir = ipcRenderer.sendSync('get-resources-dir-sync','img')
+    console.log(`url(${imgDir}/xcxx.png)`)
+    function closeWindow() {
+        ipcRenderer.invoke('close')
+    }
+    ipcRenderer.invoke('get-net-state').then((data)=>{
+        const arrayData = Object.entries(data)
+        const dom = arrayData.map((item)=>{
+            const name = document.createElement('div')
+            name.textContent = item[0]+': '
+            name.title = item[0]
+            name.className = 'adapt-name'
+
+            const val = document.createElement('div')
+            val.textContent = item[1]
+            val.title = item[1]
+            val.className = 'adapt-val'
+
+            const box = document.createElement('div')
+            box.className = 'adapt-box'
+            box.appendChild(name)
+            box.appendChild(val)
+            document.querySelector('.container').appendChild(box)
+
+            return box
+        })
+    })
+</script>
+</html>

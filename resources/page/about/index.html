@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于</title>
+    <style>
+        @font-face {
+            font-family: "Pixelated MS Sans Serif";
+            font-style: normal;
+            font-weight: 400;
+            src: url(../../font/ms_sans_serif.woff) format("woff");
+            src: url(../../font/ms_sans_serif.woff2) format("woff2")
+        }
+        html,body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            height: 100%;
+            -webkit-font-smoothing: none;
+            font-family: "Pixelated MS Sans Serif",Arial;
+            font-size: 11px;
+        }
+        body{
+            box-sizing: border-box;
+            width: 100%;
+            height: 100px;
+            background-repeat: round;
+            padding: 3px;
+        }
+        .banner{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            width: 100%;
+            height: 100px;
+            background-repeat: round;
+        }
+        .content{
+            width: 100%;
+            padding: 17px;
+            box-sizing: border-box;
+            -webkit-font-smoothing: none;
+            font-family: "Pixelated MS Sans Serif",Arial;
+            font-size: 13px;
+        }
+        .sys-info{
+            white-space: pre;
+        }
+        .foot{
+            position: fixed;
+            height: 50px;
+            bottom: 0;
+            padding-right: 17px;
+            left: 27px;
+            display: flex;
+            justify-content: space-around;
+        }
+        .foot a{
+            text-decoration: none;
+            margin-right: 7px;
+        }
+    </style>
+</head>
+<body>
+<div class="content">
+    <h3 class="title">TrafficAssistant</h3>
+    <label class="copyright">Copyright © 2023 By JingYu</label>
+    <table class="versions"></table>
+    <div class="sys-info">
+
+    </div>
+    <div class="foot">
+        <a class="buttons" href="mailto:873769935@qq.com" title="872769935@qq.com">联系作者</a>
+        <a class="buttons" href="javascript:void(0)" onclick="openGithub('https://github.com/whaleluo/TrafficAssistant')">Github</a>
+    </div>
+</div>
+
+</body>
+<script>
+    const {ipcRenderer} = require('electron')
+    function openGithub(url) {
+        ipcRenderer.invoke('open-url-in-browser',url)
+    }
+    const os = require('os')
+    const body = document.querySelector('body')
+    const imgDir = ipcRenderer.sendSync('get-resources-dir-sync','img')
+    body.style.backgroundImage = `url(${imgDir}/about-skin.png)`
+    document.querySelector('.versions').textContent=`当前版本：1.0.0 at ${os.platform()}-${os.machine()}`
+    document.querySelector('.sys-info').textContent =`主机：${os.hostname()}\n系统：${os.version()} ${os.release()} ${os.arch()}`
+        // ``+os.arch()+os.platform()+os.release()+os.version()
+</script>
+</html>
