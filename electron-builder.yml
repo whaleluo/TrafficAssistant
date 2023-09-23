@@ -6,7 +6,7 @@ asarUnpack:
 buildDependenciesFromSource: true
 npmRebuild: true
 productName: TrafficAssistant
-icon: resources/img/tray-skin.png
+icon: resources/img/favicon.ico
 afterPack: build/hooks/afterPack.js
 nsis:
   installerIcon: resources/img/favicon.ico

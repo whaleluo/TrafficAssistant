@@ -1,6 +1,6 @@
 {
   "name": "TrafficAssistant",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "TrafficAssistant - \n监控网络活动\nMonitor network activity",
   "main": "dist/main.js",
   "license": "BSD-3-Clause",
